@@ -35,8 +35,7 @@ checkRedisCache = (req, res, next) => {
   });
 };
 
-//  Endpoint:  GET /starships/:id
-//  @desc Return Starships data for particular starship id
+
 app.get("/user/:id", checkRedisCache, async (req, res) => {
   try {
     const { id } = req.params;
