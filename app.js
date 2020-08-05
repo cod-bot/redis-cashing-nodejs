@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Middleware Function to Check Cache
-checkCache = (req, res, next) => {
+checkRedisCache = (req, res, next) => {
   const { id } = req.params;
 
   redis_client.get(id, (err, data) => {
@@ -48,7 +48,7 @@ app.get("/user/:id", checkRedisCache, async (req, res) => {
     //add data to Redis
     redis_client.setex(id, 3600, JSON.stringify(data));
 
-    return res.json(users);
+    return res.json(data);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
